@@ -7,6 +7,7 @@ import { toast } from 'react-hot-toast'
 import { Dialog } from '@headlessui/react'
 import { useAuth } from '@/lib/auth-context'
 import { loginSchema, registerSchema, LoginFormData, RegisterFormData } from '@/lib/validations'
+import { ApiError } from '@/types'
 import { X, Loader2, Mail, Lock } from 'lucide-react'
 
 interface AuthModalProps {
@@ -51,8 +52,9 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
       }
       reset()
       onClose()
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Authentication failed')
+    } catch (error: unknown) {
+      const apiError = error as ApiError;
+      toast.error(apiError.response?.data?.message || 'Authentication failed')
     } finally {
       setLoading(false)
     }

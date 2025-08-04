@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'react-hot-toast'
-import { ContentType, GenerateContentResponse } from '@/types'
+import { ContentType, GenerateContentResponse, ApiError } from '@/types'
 import { apiClient } from '@/lib/api-client'
 import { generationSchema, GenerationFormData } from '@/lib/validations'
 import { Sparkles, Loader2 } from 'lucide-react'
@@ -37,9 +37,10 @@ export function GenerationForm({ onGenerationComplete }: GenerationFormProps) {
       onGenerationComplete(response.data)
       reset()
       toast.success('Content generated successfully!')
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Generation error:', error)
-      toast.error(error.response?.data?.message || 'Failed to generate content')
+      const apiError = error as ApiError;
+      toast.error(apiError.response?.data?.message || 'Failed to generate content')
     } finally {
       setLoading(false)
     }

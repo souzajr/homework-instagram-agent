@@ -1,10 +1,10 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { GetHistoryResponse, Generation, SelectedOption, ContentType } from '@/types'
+import { GetHistoryResponse, Generation, SelectedOption, ContentType, ApiError } from '@/types'
 import { apiClient } from '@/lib/api-client'
 import { useAuth } from '@/lib/auth-context'
-import { History, MessageSquare, Hash, Calendar, CheckCircle, LogIn, UserPlus } from 'lucide-react'
+import { History, MessageSquare, Hash, Calendar, CheckCircle, LogIn } from 'lucide-react'
 
 interface HistoryViewProps {
   onAuthClick: () => void
@@ -26,8 +26,9 @@ export function HistoryView({ onAuthClick }: HistoryViewProps) {
       try {
         const response = await apiClient.get<GetHistoryResponse>('/api/history')
         setHistory(response.data.generations)
-      } catch (error: any) {
-        setError(error.response?.data?.message || 'Failed to load history')
+      } catch (error: unknown) {
+        const apiError = error as ApiError;
+        setError(apiError.response?.data?.message || 'Failed to load history')
       } finally {
         setLoading(false)
       }

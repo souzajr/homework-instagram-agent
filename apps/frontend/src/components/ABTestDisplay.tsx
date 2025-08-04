@@ -6,6 +6,7 @@ import {
   GenerateContentResponse,
   SelectedOption,
   SelectOptionRequest,
+  ApiError,
 } from "@/types";
 import { apiClient } from "@/lib/api-client";
 import { Check, Hash, MessageSquare, ArrowLeft } from "lucide-react";
@@ -37,8 +38,9 @@ export function ABTestDisplay({
       await apiClient.post("/api/select", requestData);
       toast.success(`Option ${option} selected!`);
       onSelectionComplete();
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || "Failed to save selection");
+    } catch (error: unknown) {
+      const apiError = error as ApiError;
+      toast.error(apiError.response?.data?.message || "Failed to save selection");
       setSelectedOption(null);
     } finally {
       setSubmitting(false);

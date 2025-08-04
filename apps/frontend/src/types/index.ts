@@ -81,6 +81,15 @@ export interface RegisterResponse {
   user: Omit<User, 'password'>;
 }
 
+// Error types
+export interface ApiError {
+  response?: {
+    data?: {
+      message?: string;
+    };
+  };
+}
+
 // Analytics types
 export interface AnalyticsData {
   totalGenerations: number;
