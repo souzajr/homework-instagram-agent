@@ -1,0 +1,23 @@
+# Development Dockerfile for Backend
+FROM node:22-alpine
+
+# Install curl for healthcheck and openssl for Prisma
+RUN apk add --no-cache curl openssl
+
+# Set working directory
+WORKDIR /app
+
+# Install nodemon globally for development
+RUN npm install -g nodemon ts-node
+
+# Copy package files first for better caching
+COPY package*.json ./
+
+# Create node_modules directory and set permissions
+RUN mkdir -p node_modules && chmod 777 node_modules
+
+# Expose port
+EXPOSE 3001
+
+# Default command (will be overridden in docker-compose)
+CMD ["npm", "run", "start:dev"]

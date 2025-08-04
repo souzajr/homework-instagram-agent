@@ -1,0 +1,14 @@
+# Development Dockerfile for Frontend
+FROM node:22-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Create node_modules directory and set permissions
+RUN mkdir -p node_modules && chmod 777 node_modules
+
+# Expose port
+EXPOSE 3000
+
+# Default command (will be overridden in docker-compose)
+CMD ["npm", "run", "dev"]

@@ -1,0 +1,48 @@
+// Prisma schema file
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  generations Generation[]
+
+  @@map("users")
+}
+
+model Generation {
+  id             String           @id @default(cuid())
+  prompt         String
+  type           ContentType
+  optionA        Json // { caption: string; hashtags: string[] }
+  optionB        Json // { caption: string; hashtags: string[] }
+  selectedOption SelectedOption?
+  userId         String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@map("generations")
+}
+
+enum ContentType {
+  POST
+  STORY
+}
+
+enum SelectedOption {
+  A
+  B
+}
