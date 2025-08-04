@@ -26,5 +26,5 @@ RUN npm prune --production --legacy-peer-deps
 # Expose port
 EXPOSE 3001
 
-# Start the application
-CMD ["npm", "run", "start:prod"]
+# Start the application with migrations
+CMD ["sh", "-c", "npx prisma migrate deploy && npm run start:prod"]
