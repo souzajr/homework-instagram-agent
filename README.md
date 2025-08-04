@@ -2,6 +2,10 @@
 
 AI-powered Instagram content generator with A/B testing capabilities.
 
+## Live Demo
+
+**[https://homework-instagram-agent-frontend.vercel.app](https://homework-instagram-agent-frontend.vercel.app)**
+
 ## Quick Start
 
 1. Clone repository
@@ -69,5 +73,5 @@ NEXT_PUBLIC_API_URL="http://localhost:3001"
 
 ## Deployment
 
-**Railway:** Connect repo, set env vars, deploy backend  
+**Railway:** Connect repo, set `apps/backend`, set env vars, deploy backend  
 **Vercel:** Connect repo, set `apps/frontend` as root, deploy frontend
