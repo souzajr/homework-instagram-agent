@@ -9,7 +9,7 @@ AI-powered Instagram content generator with A/B testing capabilities.
 ## Quick Start
 
 1. Clone repository
-2. Copy `.env.example` to `.env` and add API keys
+2. Copy `.env.example` to `.env` and add API keys on both apps `backend` and `frontend`
 3. Run `npm run docker:dev`
 4. Open http://localhost:3000
 
