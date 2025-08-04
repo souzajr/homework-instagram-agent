@@ -6,6 +6,8 @@ AI-powered Instagram content generator with A/B testing capabilities.
 
 **[https://homework-instagram-agent-frontend.vercel.app](https://homework-instagram-agent-frontend.vercel.app)**
 
+![Demo](demo.gif)
+
 ## Quick Start
 
 1. Clone repository
