@@ -37,7 +37,11 @@ export function ABTestDisplay({
 
       await apiClient.post("/api/select", requestData);
       toast.success(`Option ${option} selected!`);
-      onSelectionComplete();
+      
+      // Wait 2 seconds to show the selection confirmation before returning to home
+      setTimeout(() => {
+        onSelectionComplete();
+      }, 2000);
     } catch (error: unknown) {
       const apiError = error as ApiError;
       toast.error(apiError.response?.data?.message || "Failed to save selection");
@@ -140,10 +144,13 @@ export function ABTestDisplay({
       </div>
 
       {selectedOption && (
-        <div className="text-center">
-          <p className="text-green-600 font-medium">
-            ✨ Great choice! Your selection helps improve our AI
-            recommendations.
+        <div className="text-center bg-green-50 p-6 rounded-lg border border-green-200">
+          <div className="text-green-600 text-2xl mb-2">✨</div>
+          <p className="text-green-800 font-semibold text-lg mb-2">
+            Great choice! Option {selectedOption} selected.
+          </p>
+          <p className="text-green-600 text-sm">
+            Your selection helps improve our AI recommendations. Returning to home in a moment...
           </p>
         </div>
       )}
