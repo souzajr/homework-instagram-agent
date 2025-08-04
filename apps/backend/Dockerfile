@@ -8,8 +8,8 @@ WORKDIR /app
 COPY package*.json ./
 COPY prisma ./prisma/
 
-# Install dependencies
-RUN npm ci --only=production --legacy-peer-deps
+# Install all dependencies first (including dev deps for build)
+RUN npm install --legacy-peer-deps
 
 # Copy source code
 COPY . .
@@ -19,6 +19,9 @@ RUN npx prisma generate
 
 # Build the application
 RUN npm run build
+
+# Remove dev dependencies after build
+RUN npm prune --production --legacy-peer-deps
 
 # Expose port
 EXPOSE 3001
